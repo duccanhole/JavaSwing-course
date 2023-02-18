@@ -1,3 +1,4 @@
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics2D;
@@ -10,7 +11,10 @@ import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.net.URL;
 
+import View.CourseManager;
 import View.HomeView;
+import View.PersonManager;
+import View.TeachingSchedule;
 
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
@@ -19,6 +23,8 @@ import java.awt.Insets;
 import java.awt.Label;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Main {
 
@@ -71,32 +77,7 @@ public class Main {
 
 		this.initNavigateView();
 		this.initMainView();
-		// add JPanel to switch between multiple JPanel
-
-		JButton btnNewButton_1 = new JButton("New button");
-		this.mainView.add(btnNewButton_1);
-
-//		JPanel panel = new JPanel(new CardLayout());
-//		
-//		JPanel SecondView = new JPanel();
-//		SecondView.add(new JLabel("this is second view"));
-//		frame.getContentPane().add(panel);
-//		
-//		JButton btnNewButton = new JButton("New button");
-//		btnNewButton.addActionListener(new ActionListener() {
-//
-////			@SuppressWarnings("deprecation")
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// TODO Auto-generated method stub
-//				CardLayout layout = (CardLayout) panel.getLayout();
-//				layout.show(panel, "second-view");
-//			}
-//			
-//		});
-//		panel.add(new HomeView(), "home-view");
-//		panel.add(SecondView, "second-view");
-//		frame.getContentPane().add(btnNewButton);
+		
 		frame.setVisible(true);
 	}
 
@@ -130,9 +111,29 @@ public class Main {
 			e.printStackTrace();
 		}
 		this.homeBtn = new JButton("Home");
+		homeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchView("home-view");
+			}
+		});
 		this.courseManageBtn = new JButton("Course Manager");
+		courseManageBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchView("course-manager");
+			}
+		});
 		this.personManageBtn = new JButton("Person Manager");
+		personManageBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchView("person-manager");
+			}
+		});
 		this.teachingScheduleBtn = new JButton("Teaching Schedule Manager");
+		teachingScheduleBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchView("teaching-schedule");
+			}
+		});
 		this.logOutBtn = new JButton("Log out");
 		this.navigateView.add(homeBtn);
 		this.navigateView.add(courseManageBtn);
@@ -142,13 +143,23 @@ public class Main {
 	}
 
 	private void initMainView() {
+		// add JPanel to switch between multiple JPanel
 		this.mainView = new JPanel();
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
 		gbc_panel_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_1.gridx = 1;
 		gbc_panel_1.gridy = 0;
 		frame.getContentPane().add(this.mainView, gbc_panel_1);
-		this.navigateView.setLayout(new GridLayout(0, 1, 0, 0));
-
+		// add other panel from View package to main view
+		this.mainView.setLayout(new CardLayout());
+		this.mainView.add(new HomeView(), "home-view");
+		this.mainView.add(new CourseManager(), "course-manager");
+		this.mainView.add(new PersonManager(), "person-manager");
+		this.mainView.add(new TeachingSchedule(), "teaching-schedule");
+	}
+	
+	private void switchView(String view) {
+		CardLayout layout = (CardLayout) mainView.getLayout();
+		layout.show(mainView, view);
 	}
 }
