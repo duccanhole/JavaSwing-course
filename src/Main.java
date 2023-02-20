@@ -1,24 +1,43 @@
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Graphics2D;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.net.URL;
 
+import View.CourseManager;
 import View.HomeView;
+import View.PersonManager;
+import View.TeachingSchedule;
 
 import javax.swing.JPanel;
+import javax.swing.border.AbstractBorder;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Label;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
+import java.awt.Graphics;
+import javax.swing.SwingConstants;
 
 public class Main {
 
@@ -28,6 +47,7 @@ public class Main {
 	private JButton homeBtn, courseManageBtn, personManageBtn, teachingScheduleBtn, logOutBtn;
 	private JButton btnNewButton;
 	private JButton btnNewButton_2;
+	private JPanel panel;
 
 	/**
 	 * Launch the application.
@@ -71,48 +91,23 @@ public class Main {
 
 		this.initNavigateView();
 		this.initMainView();
-		// add JPanel to switch between multiple JPanel
 
-		JButton btnNewButton_1 = new JButton("New button");
-		this.mainView.add(btnNewButton_1);
-
-//		JPanel panel = new JPanel(new CardLayout());
-//		
-//		JPanel SecondView = new JPanel();
-//		SecondView.add(new JLabel("this is second view"));
-//		frame.getContentPane().add(panel);
-//		
-//		JButton btnNewButton = new JButton("New button");
-//		btnNewButton.addActionListener(new ActionListener() {
-//
-////			@SuppressWarnings("deprecation")
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// TODO Auto-generated method stub
-//				CardLayout layout = (CardLayout) panel.getLayout();
-//				layout.show(panel, "second-view");
-//			}
-//			
-//		});
-//		panel.add(new HomeView(), "home-view");
-//		panel.add(SecondView, "second-view");
-//		frame.getContentPane().add(btnNewButton);
 		frame.setVisible(true);
 	}
 
 	private void initNavigateView() {
 		// add JPanel to navigate
 		this.navigateView = new JPanel();
+		navigateView.setBackground(Color.decode("#3730a3"));
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.insets = new Insets(0, 0, 0, 5);
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 0;
 		gbc_panel.gridy = 0;
 		frame.getContentPane().add(this.navigateView, gbc_panel);
-		this.navigateView.setLayout(new GridLayout(7, 1, 0, 0));
 		// create Circle Image
 		try {
-			URL imageSource = new URL("https://i.pravatar.cc/175");
+			URL imageSource = new URL("https://i.pravatar.cc/125");
 			BufferedImage image = ImageIO.read(imageSource);
 			BufferedImage circularImage = new BufferedImage(image.getWidth(), image.getHeight(),
 					BufferedImage.TYPE_INT_ARGB);
@@ -123,32 +118,118 @@ public class Main {
 			g2.setClip(new java.awt.geom.Ellipse2D.Float(0, 0, circularImage.getWidth(), circularImage.getHeight()));
 			g2.drawImage(image, 0, 0, null);
 			g2.dispose();
-
+			GridBagLayout gbl_navigateView = new GridBagLayout();
+			gbl_navigateView.columnWidths = new int[] { 345, 0 };
+			gbl_navigateView.rowHeights = new int[] { 300, 100, 0 };
+			gbl_navigateView.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+			gbl_navigateView.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+			navigateView.setLayout(gbl_navigateView);
 			this.avatar = new JLabel(new ImageIcon(circularImage));
-			this.navigateView.add(this.avatar);
+			this.avatar.setText("Admin");
+			this.avatar.setIconTextGap(20);
+			this.avatar.setForeground(Color.white);
+			avatar.setFont(new Font("Dialog", Font.BOLD, 30));
+			GridBagConstraints gbc_avatar = new GridBagConstraints();
+			gbc_avatar.fill = GridBagConstraints.BOTH;
+			gbc_avatar.insets = new Insets(0, 0, 5, 0);
+			gbc_avatar.gridx = 0;
+			gbc_avatar.gridy = 0;
+			this.navigateView.add(this.avatar, gbc_avatar);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		panel = new JPanel();
+		panel.setBackground(Color.decode("#3730a3"));
+		GridBagConstraints gbc_panel1 = new GridBagConstraints();
+		gbc_panel1.fill = GridBagConstraints.BOTH;
+		gbc_panel1.gridx = 0;
+		gbc_panel1.gridy = 1;
+		navigateView.add(panel, gbc_panel1);
+		panel.setLayout(new GridLayout(5, 1, 0, 0));
 		this.homeBtn = new JButton("Home");
+		homeBtn.setHorizontalAlignment(SwingConstants.LEADING);
+		homeBtn.setIcon(new ImageIcon(getClass().getResource("/res/icons8-home-48.png")));
+		addStyleBtn(homeBtn);
+		homeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				homeBtn.setBackground(Color.decode("#6366f1"));
+				switchView("home-view", homeBtn);
+			}
+		});
+		panel.add(homeBtn);
 		this.courseManageBtn = new JButton("Course Manager");
+		courseManageBtn.setHorizontalAlignment(SwingConstants.LEADING);
+		courseManageBtn.setIcon(new ImageIcon(getClass().getResource("/res/icons8-classroom-48.png")));
+		addStyleBtn(courseManageBtn);
+		courseManageBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchView("course-manager", courseManageBtn);
+			}
+		});
+		panel.add(courseManageBtn);
 		this.personManageBtn = new JButton("Person Manager");
-		this.teachingScheduleBtn = new JButton("Teaching Schedule Manager");
+		personManageBtn.setHorizontalAlignment(SwingConstants.LEADING);
+		personManageBtn.setIcon(new ImageIcon(getClass().getResource("/res/icons8-user-48.png")));
+		addStyleBtn(personManageBtn);
+		personManageBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchView("person-manager", personManageBtn);
+			}
+		});
+		panel.add(personManageBtn);
+		this.teachingScheduleBtn = new JButton("Teaching Schedule");
+		teachingScheduleBtn.setHorizontalAlignment(SwingConstants.LEADING);
+		teachingScheduleBtn.setIcon(new ImageIcon(getClass().getResource("/res/icons8-calendar-48.png")));
+		addStyleBtn(teachingScheduleBtn);
+		teachingScheduleBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchView("teaching-schedule", teachingScheduleBtn);
+			}
+		});
+		panel.add(teachingScheduleBtn);
 		this.logOutBtn = new JButton("Log out");
-		this.navigateView.add(homeBtn);
-		this.navigateView.add(courseManageBtn);
-		this.navigateView.add(personManageBtn);
-		this.navigateView.add(teachingScheduleBtn);
-		this.navigateView.add(logOutBtn);
+		logOutBtn.setHorizontalAlignment(SwingConstants.LEADING);
+		logOutBtn.setIcon(new ImageIcon(getClass().getResource("/res/icons8-import-48.png")));
+		addStyleBtn(logOutBtn);
+		panel.add(logOutBtn);
 	}
 
 	private void initMainView() {
+		// add JPanel to switch between multiple JPanel
 		this.mainView = new JPanel();
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
 		gbc_panel_1.fill = GridBagConstraints.BOTH;
 		gbc_panel_1.gridx = 1;
 		gbc_panel_1.gridy = 0;
 		frame.getContentPane().add(this.mainView, gbc_panel_1);
-		this.navigateView.setLayout(new GridLayout(0, 1, 0, 0));
+		// add other panel from View package to main view
+		this.mainView.setLayout(new CardLayout());
+		this.mainView.add(new HomeView(), "home-view");
+		this.mainView.add(new CourseManager(), "course-manager");
+		this.mainView.add(new PersonManager(), "person-manager");
+		this.mainView.add(new TeachingSchedule(), "teaching-schedule");
+	}
 
+	private void switchView(String view, JButton activeBtn) {
+		JButton[] btnGroup = { this.homeBtn, this.courseManageBtn, this.personManageBtn, this.teachingScheduleBtn };
+		// reset color of all button
+		for (JButton btn : btnGroup) {
+			btn.setBackground(Color.decode("#3730a3"));
+			btn.setContentAreaFilled(true);
+		}
+		// assign new color for active btn
+		activeBtn.setBackground(Color.decode("#818cf8"));
+		CardLayout layout = (CardLayout) mainView.getLayout();
+		layout.show(mainView, view);
+	}
+
+	// style for btn here
+	private void addStyleBtn(JButton btn) {
+		String bg = btn.getText() == "Log out" ? "#ef4444" : "#3730a3";
+		btn.setFont(new Font("Dialog", Font.BOLD, 16));
+		btn.setBorder(new EmptyBorder(10, 50, 10, 10));
+		btn.setBackground(Color.decode(bg));
+		btn.setForeground(btn.getText() != "Log out" ? Color.white : Color.black);
+		btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
 }
