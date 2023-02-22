@@ -1,42 +1,33 @@
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Graphics2D;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.net.URL;
 
-import View.CourseManager;
-import View.HomeView;
-import View.PersonManager;
-import View.TeachingSchedule;
+import GUI.ColorTheme;
+import GUI.view.CourseManager;
+import GUI.view.PersonManager;
+import GUI.view.TeachingSchedule;
 
 import javax.swing.JPanel;
-import javax.swing.border.AbstractBorder;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.Label;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
-import java.awt.Graphics;
 import javax.swing.SwingConstants;
 
 public class Main {
@@ -44,10 +35,9 @@ public class Main {
 	private JFrame frame;
 	private JPanel navigateView, mainView;
 	private JLabel avatar;
-	private JButton homeBtn, courseManageBtn, personManageBtn, teachingScheduleBtn, logOutBtn;
-	private JButton btnNewButton;
-	private JButton btnNewButton_2;
+	private JButton courseManageBtn, personManageBtn, teachingScheduleBtn, logOutBtn;
 	private JPanel panel;
+	private static String resourcePath = "/GUI/res/";
 
 	/**
 	 * Launch the application.
@@ -98,7 +88,7 @@ public class Main {
 	private void initNavigateView() {
 		// add JPanel to navigate
 		this.navigateView = new JPanel();
-		navigateView.setBackground(Color.decode("#3730a3"));
+		navigateView.setBackground(Color.decode(ColorTheme.base));
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.insets = new Insets(0, 0, 0, 5);
 		gbc_panel.fill = GridBagConstraints.BOTH;
@@ -139,27 +129,27 @@ public class Main {
 			e.printStackTrace();
 		}
 		panel = new JPanel();
-		panel.setBackground(Color.decode("#3730a3"));
+		panel.setBackground(Color.decode(ColorTheme.base));
 		GridBagConstraints gbc_panel1 = new GridBagConstraints();
 		gbc_panel1.fill = GridBagConstraints.BOTH;
 		gbc_panel1.gridx = 0;
 		gbc_panel1.gridy = 1;
 		navigateView.add(panel, gbc_panel1);
-		panel.setLayout(new GridLayout(5, 1, 0, 0));
-		this.homeBtn = new JButton("Home");
-		homeBtn.setHorizontalAlignment(SwingConstants.LEADING);
-		homeBtn.setIcon(new ImageIcon(getClass().getResource("/res/icons8-home-48.png")));
-		addStyleBtn(homeBtn);
-		homeBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				homeBtn.setBackground(Color.decode("#6366f1"));
-				switchView("home-view", homeBtn);
-			}
-		});
-		panel.add(homeBtn);
+		panel.setLayout(new GridLayout(4, 1, 0, 0));
+//		this.homeBtn = new JButton("Home");
+//		homeBtn.setHorizontalAlignment(SwingConstants.LEADING);
+//		homeBtn.setIcon(new ImageIcon(getClass().getResource(resourcePath + "icons8-home-48.png")));
+//		addStyleBtn(homeBtn);
+//		homeBtn.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				homeBtn.setBackground(Color.decode("#6366f1"));
+//				switchView("home-view", homeBtn);
+//			}
+//		});
+//		panel.add(homeBtn);
 		this.courseManageBtn = new JButton("Course Manager");
 		courseManageBtn.setHorizontalAlignment(SwingConstants.LEADING);
-		courseManageBtn.setIcon(new ImageIcon(getClass().getResource("/res/icons8-classroom-48.png")));
+		courseManageBtn.setIcon(new ImageIcon(getClass().getResource(resourcePath + "icons8-classroom-48.png")));
 		addStyleBtn(courseManageBtn);
 		courseManageBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -169,7 +159,7 @@ public class Main {
 		panel.add(courseManageBtn);
 		this.personManageBtn = new JButton("Person Manager");
 		personManageBtn.setHorizontalAlignment(SwingConstants.LEADING);
-		personManageBtn.setIcon(new ImageIcon(getClass().getResource("/res/icons8-user-48.png")));
+		personManageBtn.setIcon(new ImageIcon(getClass().getResource(resourcePath + "icons8-user-48.png")));
 		addStyleBtn(personManageBtn);
 		personManageBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -179,7 +169,7 @@ public class Main {
 		panel.add(personManageBtn);
 		this.teachingScheduleBtn = new JButton("Teaching Schedule");
 		teachingScheduleBtn.setHorizontalAlignment(SwingConstants.LEADING);
-		teachingScheduleBtn.setIcon(new ImageIcon(getClass().getResource("/res/icons8-calendar-48.png")));
+		teachingScheduleBtn.setIcon(new ImageIcon(getClass().getResource(resourcePath + "icons8-calendar-48.png")));
 		addStyleBtn(teachingScheduleBtn);
 		teachingScheduleBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -189,7 +179,7 @@ public class Main {
 		panel.add(teachingScheduleBtn);
 		this.logOutBtn = new JButton("Log out");
 		logOutBtn.setHorizontalAlignment(SwingConstants.LEADING);
-		logOutBtn.setIcon(new ImageIcon(getClass().getResource("/res/icons8-import-48.png")));
+		logOutBtn.setIcon(new ImageIcon(getClass().getResource(resourcePath + "icons8-import-48.png")));
 		addStyleBtn(logOutBtn);
 		panel.add(logOutBtn);
 	}
@@ -204,28 +194,29 @@ public class Main {
 		frame.getContentPane().add(this.mainView, gbc_panel_1);
 		// add other panel from View package to main view
 		this.mainView.setLayout(new CardLayout());
-		this.mainView.add(new HomeView(), "home-view");
 		this.mainView.add(new CourseManager(), "course-manager");
 		this.mainView.add(new PersonManager(), "person-manager");
 		this.mainView.add(new TeachingSchedule(), "teaching-schedule");
 	}
 
 	private void switchView(String view, JButton activeBtn) {
-		JButton[] btnGroup = { this.homeBtn, this.courseManageBtn, this.personManageBtn, this.teachingScheduleBtn };
+		JButton[] btnGroup = { this.courseManageBtn, this.personManageBtn, this.teachingScheduleBtn };
 		// reset color of all button
 		for (JButton btn : btnGroup) {
-			btn.setBackground(Color.decode("#3730a3"));
-			btn.setContentAreaFilled(true);
+			btn.setBackground(Color.decode(ColorTheme.base));
+			btn.setForeground(Color.white);
+//			btn.setContentAreaFilled(true);
 		}
 		// assign new color for active btn
-		activeBtn.setBackground(Color.decode("#818cf8"));
+		activeBtn.setBackground(Color.decode(ColorTheme.primary));
+		activeBtn.setForeground(Color.black);
 		CardLayout layout = (CardLayout) mainView.getLayout();
 		layout.show(mainView, view);
 	}
 
 	// style for btn here
 	private void addStyleBtn(JButton btn) {
-		String bg = btn.getText() == "Log out" ? "#ef4444" : "#3730a3";
+		String bg = btn.getText() == "Log out" ? "#ef4444" : ColorTheme.base;
 		btn.setFont(new Font("Dialog", Font.BOLD, 16));
 		btn.setBorder(new EmptyBorder(10, 50, 10, 10));
 		btn.setBackground(Color.decode(bg));
