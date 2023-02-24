@@ -67,10 +67,11 @@ public class Main {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setBounds(100, 100, 1024, 600);
+//		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Course manager app");
+                frame.setLocationRelativeTo(null);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		// set layout with 2 column, first has min 350, second has min 100
 		gridBagLayout.columnWidths = new int[] { 350, 100 };
