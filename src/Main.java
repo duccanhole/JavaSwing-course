@@ -98,7 +98,7 @@ public class Main {
 		frame.getContentPane().add(this.navigateView, gbc_panel);
 		// create Circle Image
 		try {
-			URL imageSource = new URL("https://i.pravatar.cc/125");
+			URL imageSource = new URL("https://i.pravatar.cc/100");
 			BufferedImage image = ImageIO.read(imageSource);
 			BufferedImage circularImage = new BufferedImage(image.getWidth(), image.getHeight(),
 					BufferedImage.TYPE_INT_ARGB);
@@ -119,7 +119,7 @@ public class Main {
 			this.avatar.setText("Admin");
 			this.avatar.setIconTextGap(20);
 			this.avatar.setForeground(Color.white);
-			avatar.setFont(new Font("Dialog", Font.BOLD, 30));
+			avatar.setFont(new Font("Dialog", Font.BOLD, 24));
 			GridBagConstraints gbc_avatar = new GridBagConstraints();
 			gbc_avatar.fill = GridBagConstraints.BOTH;
 			gbc_avatar.insets = new Insets(0, 0, 5, 0);
