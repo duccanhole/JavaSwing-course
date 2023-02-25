@@ -8,12 +8,12 @@ package GUI.view;
  *
  * @author datly
  */
-public class TechPanel extends javax.swing.JPanel {
+public class StudentGradePanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form TechPanel
+     * Creates new form StudentGradePanel
      */
-    public TechPanel() {
+    public StudentGradePanel() {
         initComponents();
     }
 
@@ -28,23 +28,25 @@ public class TechPanel extends javax.swing.JPanel {
 
         jButton1 = new javax.swing.JButton();
 
-        jButton1.setText("TechPanel");
+        setPreferredSize(new java.awt.Dimension(774, 600));
+
+        jButton1.setText("Click");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(152, 152, 152)
+                .addGap(332, 332, 332)
                 .addComponent(jButton1)
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(370, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(123, 123, 123)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(290, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addGap(287, 287, 287))
         );
     }// </editor-fold>//GEN-END:initComponents
 
