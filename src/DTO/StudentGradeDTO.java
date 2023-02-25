@@ -14,6 +14,9 @@ public class StudentGradeDTO {
     private int CourseID;
     private int StudentID;
     private double Grade;
+    private String StudentLastName;
+    private String StudentFirstName;
+    private String CourseName;
 
     public StudentGradeDTO(int EnrollmentID, int CourseID, int StudentID, double Grade) {
         this.EnrollmentID = EnrollmentID;
@@ -21,6 +24,43 @@ public class StudentGradeDTO {
         this.StudentID = StudentID;
         this.Grade = Grade;
     }
+
+    public StudentGradeDTO(int EnrollmentID, int CourseID, int StudentID, double Grade, String StudentLastName, String StudentFirstName, String CourseName) {
+        this.EnrollmentID = EnrollmentID;
+        this.CourseID = CourseID;
+        this.StudentID = StudentID;
+        this.Grade = Grade;
+        this.StudentLastName = StudentLastName;
+        this.StudentFirstName = StudentFirstName;
+        this.CourseName = CourseName;
+    }
+
+    public String getStudentLastName() {
+        return StudentLastName;
+    }
+
+    public void setStudentLastName(String StudentLastName) {
+        this.StudentLastName = StudentLastName;
+    }
+
+    public String getStudentFirstName() {
+        return StudentFirstName;
+    }
+
+    public void setStudentFirstName(String StudentFirstName) {
+        this.StudentFirstName = StudentFirstName;
+    }
+
+    public String getCourseName() {
+        return CourseName;
+    }
+
+    public void setCourseName(String CourseName) {
+        this.CourseName = CourseName;
+    }
+
+    
+    
 
     public StudentGradeDTO() {
     }

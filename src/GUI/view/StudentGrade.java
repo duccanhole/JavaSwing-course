@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import GUI.ColorTheme;
+import java.sql.SQLException;
 
 public class StudentGrade extends JPanel {
 
@@ -16,7 +17,7 @@ public class StudentGrade extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public StudentGrade() {
+	public StudentGrade() throws SQLException {
 		setLayout(new CardLayout(0, 0));
 		
                 
