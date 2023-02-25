@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import GUI.ColorTheme;
+import javax.swing.JFrame;
 
 public class TeachingSchedule extends JPanel {
 
@@ -18,11 +19,10 @@ public class TeachingSchedule extends JPanel {
 	 */
 	public TeachingSchedule() {
 		setLayout(new CardLayout(0, 0));
-
-		JLabel lblThisIsHome = new JLabel("This is teaching schedule");
-		lblThisIsHome.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblThisIsHome, "name_140143002992856");
-		setBackground(Color.decode(ColorTheme.neutral));
+                
+                JPanel TechPanel = new TechPanel();
+                
+                add(TechPanel);
 	}
 
 }

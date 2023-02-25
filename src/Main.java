@@ -74,7 +74,7 @@ public class Main {
                 frame.setLocationRelativeTo(null);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		// set layout with 2 column, first has min 350, second has min 100
-		gridBagLayout.columnWidths = new int[] { 350, 100 };
+		gridBagLayout.columnWidths = new int[] { 250, 100 };
 		gridBagLayout.rowHeights = new int[] { 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 0.0, 1.0 };
 		gridBagLayout.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
@@ -98,7 +98,7 @@ public class Main {
 		frame.getContentPane().add(this.navigateView, gbc_panel);
 		// create Circle Image
 		try {
-			URL imageSource = new URL("https://i.pravatar.cc/100");
+			URL imageSource = new URL("https://i.pravatar.cc/50");
 			BufferedImage image = ImageIO.read(imageSource);
 			BufferedImage circularImage = new BufferedImage(image.getWidth(), image.getHeight(),
 					BufferedImage.TYPE_INT_ARGB);
@@ -110,8 +110,8 @@ public class Main {
 			g2.drawImage(image, 0, 0, null);
 			g2.dispose();
 			GridBagLayout gbl_navigateView = new GridBagLayout();
-			gbl_navigateView.columnWidths = new int[] { 345, 0 };
-			gbl_navigateView.rowHeights = new int[] { 300, 100, 0 };
+			gbl_navigateView.columnWidths = new int[] { 245, 0 };
+			gbl_navigateView.rowHeights = new int[] { 200, 100, 0 };
 			gbl_navigateView.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
 			gbl_navigateView.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
 			navigateView.setLayout(gbl_navigateView);
@@ -217,11 +217,11 @@ public class Main {
 
 	// style for btn here
 	private void addStyleBtn(JButton btn) {
-		String bg = btn.getText() == "Log out" ? "#ef4444" : ColorTheme.base;
+		String bg = ColorTheme.base;
 		btn.setFont(new Font("Dialog", Font.BOLD, 16));
-		btn.setBorder(new EmptyBorder(10, 50, 10, 10));
+		btn.setBorder(new EmptyBorder(10, 35, 10, 20));
 		btn.setBackground(Color.decode(bg));
-		btn.setForeground(btn.getText() != "Log out" ? Color.white : Color.black);
+		btn.setForeground(Color.white);
 		btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
 }
