@@ -18,10 +18,10 @@ public class StudentGrade extends JPanel {
 	 */
 	public StudentGrade() {
 		setLayout(new CardLayout(0, 0));
-		JLabel lblThisIsHome = new JLabel("This is student grade");
-		lblThisIsHome.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblThisIsHome, "name_140143002992856");
-		setBackground(Color.decode(ColorTheme.neutral));
+		
+                
+                JPanel StudentGradePanel = new StudentGradePanel();
+                add(StudentGradePanel);
 	}
 
 }
