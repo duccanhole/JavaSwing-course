@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,6 +35,7 @@ public class MyDatabaseManager {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Vui long mo mysql");
             Logger.getLogger(MyDatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -43,6 +45,7 @@ public class MyDatabaseManager {
         try {
             rs = stmt.executeQuery(sql);
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Vui long mo mysql");
             Logger.getLogger(MyDatabaseManager.class.getName()).log(Level.SEVERE, null, e);
         }
         return rs;

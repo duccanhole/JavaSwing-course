@@ -9,6 +9,7 @@ import DTO.CourseDTO;
 import DTO.PersonDTO;
 import DTO.StudentGradeDTO;
 import java.awt.Component;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +38,8 @@ public class StudentGradePanel extends javax.swing.JPanel {
     ArrayList<StudentGradeDTO> studentGrades = new ArrayList<StudentGradeDTO>();
     JComboBox<String> jCourse = new JComboBox<String>();
     JComboBox<String> jStudent = new JComboBox<String>();
+    JComboBox<String> jSearch = new JComboBox<String>();
+
     int id = 0;
 
     StudentGradeBUS studentGradeBus = new StudentGradeBUS();
@@ -98,7 +101,107 @@ public class StudentGradePanel extends javax.swing.JPanel {
         getData();
         initJStudent();
         initJCourse();
+        initJSearch();
         loadTable(studentGrades);
+
+    }
+
+    public void initJSearch() {
+        jSearch.setBounds(335, 17, 100, 22);
+        String[] dataSearch = {"EnrollmentID", "StudentID", "CourseID", "StudentName", "CourseName", ">=Grade", "<Grade"};
+
+        for (String item : dataSearch) {
+            jSearch.addItem(item);
+        }
+
+        add(jSearch);
+    }
+
+    public void search() {
+        String textSearch = jTextField2.getText();
+        String searchSelected = jSearch.getSelectedItem().toString();
+
+        if (textSearch.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Vui long nhap text search");
+        } else {
+            ArrayList<StudentGradeDTO> listSearch = new ArrayList<StudentGradeDTO>();
+            switch (searchSelected) {
+                case "EnrollmentID":
+                    if (!isNumber(textSearch)) {
+                        JOptionPane.showMessageDialog(this, "StudentID phai la so");
+                        break;
+                    }
+                    for (StudentGradeDTO stdg : studentGrades) {
+                        if (stdg.getEnrollmentID() == Integer.parseInt(textSearch)) {
+                            listSearch.add(stdg);
+                        }
+                    }
+                    break;
+                case "StudentID":
+                    if (!isNumber(textSearch)) {
+                        JOptionPane.showMessageDialog(this, "StudentID phai la so");
+                        break;
+                    }
+                    for (StudentGradeDTO stdg : studentGrades) {
+                        if (stdg.getStudentID() == Integer.parseInt(textSearch)) {
+                            listSearch.add(stdg);
+                        }
+                    }
+                    break;
+                case "CourseID":
+                    if (!isNumber(textSearch)) {
+                        JOptionPane.showMessageDialog(this, "StudentID phai la so");
+                        break;
+                    }
+                    for (StudentGradeDTO stdg : studentGrades) {
+                        if (stdg.getCourseID() == Integer.parseInt(textSearch)) {
+                            listSearch.add(stdg);
+                        }
+                    }
+                    break;
+                case ">=Grade":
+                    if (!isNumber(textSearch)) {
+                        JOptionPane.showMessageDialog(this, "Grade phai la so");
+                        break;
+                    }
+                    for (StudentGradeDTO stdg : studentGrades) {
+                        double point = Double.parseDouble(textSearch);
+                        if (stdg.getGrade() >= point) {
+                            listSearch.add(stdg);
+                        }
+                    }
+                    break;
+                case "<Grade":
+                    if (!isNumber(textSearch)) {
+                        JOptionPane.showMessageDialog(this, "Grade phai la so");
+                        break;
+                    }
+                    for (StudentGradeDTO stdg : studentGrades) {
+                        double point = Double.parseDouble(textSearch);
+                        if (stdg.getGrade() < point) {
+                            listSearch.add(stdg);
+                        }
+                    }
+                    break;
+                case "StudentName":
+                    for (StudentGradeDTO stdg : studentGrades) {
+                        String studentName = stdg.getStudentFirstName() + " " + stdg.getStudentLastName();
+                        if(studentName.indexOf(textSearch) != -1){
+                            listSearch.add(stdg);
+                        }
+                    }
+                    break;
+                case "CourseName":
+                    for (StudentGradeDTO stdg : studentGrades) {
+                        if(stdg.getCourseName().indexOf(textSearch) != -1){
+                            listSearch.add(stdg);
+                        }
+                    }
+                    break;
+            }
+            loadTable(listSearch);
+
+        }
 
     }
 
@@ -167,6 +270,7 @@ public class StudentGradePanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jTextField2 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(774, 600));
 
@@ -228,6 +332,24 @@ public class StudentGradePanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField2KeyPressed(evt);
+            }
+        });
+
+        jButton1.setText("Search");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -248,7 +370,9 @@ public class StudentGradePanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -267,7 +391,9 @@ public class StudentGradePanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -284,7 +410,7 @@ public class StudentGradePanel extends javax.swing.JPanel {
                     .addComponent(jButton5))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -352,6 +478,7 @@ public class StudentGradePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         // reset form
         resetForm();
+        loadTable(studentGrades);
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
@@ -390,7 +517,6 @@ public class StudentGradePanel extends javax.swing.JPanel {
         String jCourseSelected = (String) jCourse.getSelectedItem();
         String courseID = jCourseSelected.split("\\[|\\]")[1];
 
-      
         String grade = jTextField1.getText();
         if (!isNumber(grade)) {
             JOptionPane.showMessageDialog(this, "Grade phải là số", "Thông báo validate", JOptionPane.INFORMATION_MESSAGE);
@@ -421,8 +547,27 @@ public class StudentGradePanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton3MouseClicked
 
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        //search
+        search();
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
+        // TODO add your handling code here:
+        //search
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            search();
+        }
+    }//GEN-LAST:event_jTextField2KeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
