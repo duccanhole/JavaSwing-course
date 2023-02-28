@@ -31,6 +31,9 @@ import java.awt.image.BufferedImage;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingConstants;
 
 public class MainJFrame {
@@ -203,7 +206,11 @@ public class MainJFrame {
 		this.mainView.add(new CourseManager(), "course-manager");
 		this.mainView.add(new PersonManager(), "person-manager");
 		this.mainView.add(new TeachingSchedule(), "teaching-schedule");
-		this.mainView.add(new StudentGrade(), "student-grade");
+            try {
+                this.mainView.add(new StudentGrade(), "student-grade");
+            } catch (SQLException ex) {
+                Logger.getLogger(MainJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 
 	private void switchView(String view, JButton activeBtn) {

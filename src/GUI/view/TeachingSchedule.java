@@ -20,7 +20,8 @@ public class TeachingSchedule extends JPanel {
 	public TeachingSchedule() {
 		setLayout(new CardLayout(0, 0));
                 
-                
+                JPanel TeachingSchedulePanel = new TeachingSchedulePanel();
+                this.add(TeachingSchedulePanel);
 	}
 
 }
