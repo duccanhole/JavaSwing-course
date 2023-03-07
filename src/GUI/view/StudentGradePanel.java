@@ -8,6 +8,8 @@ import BUS.StudentGradeBUS;
 import DTO.CourseDTO;
 import DTO.PersonDTO;
 import DTO.StudentGradeDTO;
+import GUI.ColorTheme;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -97,7 +99,7 @@ public class StudentGradePanel extends javax.swing.JPanel {
                 }
             }
         });
-
+        setBackground(Color.decode(ColorTheme.neutral));
         getData();
         initJStudent();
         initJCourse();
