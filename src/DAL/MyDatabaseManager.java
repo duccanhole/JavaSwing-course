@@ -21,6 +21,9 @@ public class MyDatabaseManager {
     public PreparedStatement p;
     public Connection conn;
     public Statement stmt;
+    Connection connect = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
     private static final String DB_URL = "jdbc:mysql://localhost:3306/school";
     private static final String USER_NAME = "root";
     private static final String PASSWORD = "";
@@ -46,5 +49,32 @@ public class MyDatabaseManager {
             Logger.getLogger(MyDatabaseManager.class.getName()).log(Level.SEVERE, null, e);
         }
         return rs;
+    }
+     public int executeUpdate(String Query) throws Exception {
+        //khai báo biến int để lưu trữ kết quả torng quá trình thực thi
+        int res = Integer.MIN_VALUE;
+        
+        try {
+            //thực thi câu lệnh
+            res = stmt.executeUpdate(Query);
+        } catch (Exception e) {
+            throw new Exception("Error " + e.getMessage());
+        }
+        
+        return res;
+    }
+      public void Close() throws Exception {
+        if (this.resultSet != null && this.resultSet.isClosed()) {
+            this.resultSet.close();
+            this.resultSet = null;
+        }
+        if (this.statement != null && this.statement.isClosed()) {
+            this.statement.close();
+            this.statement = null;
+        }
+        if (this.connect != null && this.connect.isClosed()) {
+            this.connect.close();
+            this.connect = null;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package DAO;
 
+import DAL.MyDatabaseManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -10,17 +11,22 @@ import java.util.HashMap;
  */
 public class MyConnectUnit {
     //biến kết nối cơ bản
-    private MySQLConnection connect;
+//    private MySQLConnection connect;
+     private MyDatabaseManager connect;
 
     // hàm khởi tạo kết nối mặc định
     public MyConnectUnit() {
-        connect = new MySQLConnection("localhost", "root", "", "school");
+//        connect = new MySQLConnection("localhost", "root", "", "school");
+          
+          connect=new MyDatabaseManager();
+          connect.connectDB();
+        
     }
     
     // hàm khởi tạo cơ bản
-    public MyConnectUnit(String Host, String Username, String Password, String Database) {
-        connect = new MySQLConnection(Host, Username, Password, Database);
-    }
+//    public MyConnectUnit(String Host, String Username, String Password, String Database) {
+//        connect = new MySQLConnection(Host, Username, Password, Database);
+//    }
     
     // Hàm hỗ trợ Select CSDL
     /**
@@ -37,7 +43,7 @@ public class MyConnectUnit {
         // chèn ký tự ; vào cuồi các câu lệnh
         query.append(";");
         // thực thi câu lệnh query và trả kết quả
-        return this.connect.excuteQuery(query.toString());
+        return this.connect.doReadQuery(query.toString());
     }
     
     // Hàm over load Select giảm OrderBy parameter
