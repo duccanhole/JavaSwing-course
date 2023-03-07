@@ -58,7 +58,7 @@ public class CourseDTO {
 
     @Override
     public String toString() {
-        return "CourseDTO{" + "CourseID=" + CourseID + ", Title=" + Title + ", Credits=" + Credits + ", DepartmentID=" + DepartmentID + '}';
+        return "OnlineCourseDTO{" + "CourseID=" + CourseID + ", Title=" + Title + ", Credits=" + Credits + ", DepartmentID=" + DepartmentID + '}';
     }
     
 }

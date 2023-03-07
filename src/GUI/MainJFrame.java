@@ -31,6 +31,7 @@ import java.awt.image.BufferedImage;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.sql.SQLException;
 import javax.swing.SwingConstants;
 
 public class MainJFrame {
@@ -64,14 +65,14 @@ public class MainJFrame {
 	/**
 	 * Create the application.
 	 */
-	public MainJFrame() {
+	public MainJFrame() throws SQLException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize() throws SQLException {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1024, 600);
 //		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -190,7 +191,7 @@ public class MainJFrame {
 		panel.add(logOutBtn);
 	}
 
-	private void initMainView() {
+	private void initMainView() throws SQLException {
 		// add JPanel to switch between multiple JPanel
 		this.mainView = new JPanel();
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
